@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+   	android:background="@drawable/gradient_background"
+    >
+	    		<ImageView
+   		android:id="@+id/stripey"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content" 
+	    android:src="@drawable/stripey"
+		android:layout_below="@id/wlll" />
+
+<LinearLayout 
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="4dip"
+    >
+    
+    <TextView  
+	    android:id="@+id/carrier"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content"
+	    android:textAppearance="?android:attr/textAppearanceLarge"
+	    android:text="You're the first person in your area who wants to cuddle!"
+	    android:textColor="#333"
+		android:textStyle="bold"
+	    android:padding="7dip"
+	    android:shadowColor="#fff"
+		android:shadowRadius="1"
+		android:shadowDy="-1"
+    />
+    
+    <TextView  
+	    android:id="@+id/num_desc"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content"
+	    android:textAppearance="?android:attr/textAppearanceSmall"
+	    android:text="\nWhat's your email address? This is how people will contact you."
+	    android:textColor="#333"
+	    android:padding="3dip"
+	    android:shadowColor="#fff"
+		android:shadowRadius="1"
+		android:shadowDy="-1"
+    />
+    
+   <EditText
+        android:id="@+id/email"
+    	android:layout_width="fill_parent" 
+    	android:layout_height="wrap_content" 
+    	android:hint="sholmes@gmail.com"
+   		android:minLines="1"
+    ></EditText>
+    
+	<TextView  
+	    android:id="@+id/num_desc"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content"
+	    android:textAppearance="?android:attr/textAppearanceSmall"
+	    android:text="\nWhat do you want your username to be?"
+	    android:textColor="#333"
+	    android:padding="3dip"
+	    android:shadowColor="#fff"
+		android:shadowRadius="1"
+		android:shadowDy="-1"
+    />
+    
+   <EditText
+        android:id="@+id/username"
+    	android:layout_width="fill_parent" 
+    	android:layout_height="wrap_content" 
+    	android:hint="TheDetective221"
+   		android:minLines="1"
+   		android:maxLength="15"
+    ></EditText>
+    
+    <TextView  
+	    android:id="@+id/profile_desc"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content"
+	    android:textAppearance="?android:attr/textAppearanceSmall"
+	    android:text="\nAnd your password?"
+	    android:textColor="#333"
+	    android:padding="3dip"
+	    android:shadowColor="#fff"
+		android:shadowRadius="1"
+		android:shadowDy="-1"
+    />
+    
+   <EditText
+        android:id="@+id/password"
+    	android:layout_width="fill_parent" 
+    	android:layout_height="wrap_content" 
+   		android:minLines="1"
+   		android:maxLength="140"
+   		android:password="true"
+    ></EditText>
+    
+    <Button
+    	android:id="@+id/thebutton"
+    	android:layout_width="fill_parent" 
+    	android:layout_height="wrap_content" 
+    	android:text="Join!"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:padding="4dip"
+    ></Button>
+    
+    <ProgressBar
+    	android:id="@+id/progressbar"
+    	android:padding="15dip"
+    	android:layout_height="wrap_content"
+    	android:layout_width="wrap_content"
+    	android:visibility="gone"
+    	android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_gravity="center"
+   	></ProgressBar>
+    <TextView  
+	    android:id="@+id/loadingtext"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content"
+	    android:textAppearance="?android:attr/textAppearanceSmall"
+	    android:text="posting cuddle data.."
+	    android:textColor="#000000"
+	    android:padding="7dip"
+        android:gravity="center"
+    	android:visibility="gone"
+    	
+    />
+</LinearLayout>
+
+</LinearLayout>
