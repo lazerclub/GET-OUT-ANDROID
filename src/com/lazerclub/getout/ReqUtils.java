@@ -1,10 +1,12 @@
 package com.lazerclub.getout;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -267,6 +269,24 @@ public class ReqUtils {
 		
 	}
 	
+//	public String postNewUser(String email, String username, String password) {
+//        try {
+//            InputStream serverInput = ClientHttpRequest.post(
+//                    new java.net.URL(c.getString(R.string.user_url)), 
+//                    new Object[] {
+//                                  "email", email,
+//                                  "username", username,
+//                                  "password", password,
+//                                 });
+//        } catch (MalformedURLException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//	}
+	
 	public boolean postUser(String number, String profile){
 		
 		HttpPost req = new HttpPost("http://api.downto.be/users");	
@@ -390,6 +410,40 @@ public class ReqUtils {
         }
         return sb.toString();
     }
+	
+	public String registerUser(String username, String email, String password) {
+        HttpPost req = new HttpPost(c.getString(R.string.user_url));
+        
+        List<NameValuePair> nvps = new ArrayList<NameValuePair>(2);
+        nvps.add(new BasicNameValuePair("user[username]", username));
+        nvps.add(new BasicNameValuePair("user[email]", email));
+        nvps.add(new BasicNameValuePair("user[password]", password));
+        nvps.add(new BasicNameValuePair("user[password_confirmation]", password));
+        try {
+            req.setEntity(new UrlEncodedFormEntity(nvps));
+        } catch (UnsupportedEncodingException e1) {
+            e1.printStackTrace();
+        }
+        HttpClient hc = new DefaultHttpClient();
+        HttpResponse response = null;
+        try {
+             response =  hc.execute(req);
+        } catch (ClientProtocolException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        System.out.println("Requested URL: ");
+        System.out.println(req);
+        System.out.println("Response: ");
+        String r = parseEntity(response.getEntity());
+        System.out.println(r);
+        return r;
+	    
+	}
 	
 	public String authenticate() throws OAuthMessageSignerException, OAuthNotAuthorizedException, OAuthExpectationFailedException, OAuthCommunicationException{
 		OAuthProvider provider = new CommonsHttpOAuthProvider(request_token_url, access_token_url, authorize_token_url);

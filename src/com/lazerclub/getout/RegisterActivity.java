@@ -60,6 +60,9 @@ public class RegisterActivity extends Activity{
 				if(email.getText().toString().equals("") || username.getText().toString().equals("")|| password.getText().toString().equals("")){
 					return;
 				}
+				if(password.getText().toString().length()<6){
+					return;
+				}
 				
 				b.setPressed(true);
 				b.setEnabled(false);
@@ -72,8 +75,8 @@ public class RegisterActivity extends Activity{
 
 					public void run() {
 						
-//						try {
-//							ru.authenticate();
+						try {
+							String response = ru.registerUser(username.getText().toString(), email.getText().toString(), password.getText().toString());
 //							if(ru.postUser(phone.getText().toString(), profile.getText().toString())){
 //								loading.setText("Okay!");
 //								Intent i = new Intent(RegisterActivity.this, SplashActivity.class);
@@ -84,12 +87,12 @@ public class RegisterActivity extends Activity{
 //								b.setPressed(false);
 //								b.setEnabled(true);
 //							}
-//						} catch (Exception e) {
-//							// TODO Auto-generated catch block
-//							e.printStackTrace();
-//							b.setPressed(false);
-//							b.setEnabled(true);
-//						}
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							b.setPressed(false);
+							b.setEnabled(true);
+						}
 				
 					}}, 500);
 			}});
@@ -100,6 +103,11 @@ public class RegisterActivity extends Activity{
           for (Account account : accounts) {
             String possibleEmail = account.name;
             email.setText(possibleEmail);
+            
+            if(possibleEmail.contains("@")) {
+                username.setText(possibleEmail.split("@")[0]);
+            }
+            
             return;
           }
 

@@ -5,4 +5,5 @@
     <string name="menu_cell_2">Nearby</string>
     <string name="menu_cell_3">Profile</string>
     <string name="menu_cell_4">About</string>
+    <string name="user_url">http://beta.getout.cc/users</string>
 </resources>
