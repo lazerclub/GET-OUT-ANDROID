@@ -46,8 +46,9 @@
 		<ImageView
    		android:id="@+id/stripey"
 	    android:layout_width="fill_parent" 
-	    android:layout_height="wrap_content" 
-	    android:src="@drawable/stripey"
+	    android:layout_height="wrap_content"
+	    android:src="@drawable/stripe_tile"
+	    android:background="@drawable/stripe_tile"
 		android:layout_below="@id/wlll" />
 		
 		<ImageView

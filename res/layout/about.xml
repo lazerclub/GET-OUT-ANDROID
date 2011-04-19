@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+   	android:background="@drawable/gradient_background"
+    >
+		<ImageView
+   		android:id="@+id/stripey"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content"
+	    android:src="@drawable/stripe_tile"
+	    android:background="@drawable/stripe_tile"
+	 />
+
+<ScrollView
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+
+<LinearLayout 
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="4dip"
+    >
+    
+        <TextView  
+	    android:id="@+id/about"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content"
+	    android:textAppearance="?android:attr/textAppearanceLarge"
+	    android:text="About"
+	    android:textColor="#333"
+		android:textStyle="bold"
+	    android:padding="7dip"
+	    android:shadowColor="#fff"
+		android:shadowRadius="1"
+		android:shadowDy="-1"
+		android:paddingTop="24dip"
+    />
+    
+    <TextView  
+	    android:id="@+id/carrier"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content"
+	    android:textAppearance="?android:attr/textAppearanceMedium"
+	    android:text="You're the first person in your area who wants to cuddle!"
+	    android:textColor="#333"
+	    android:padding="7dip"
+	    android:shadowColor="#fff"
+		android:shadowRadius="1"
+		android:shadowDy="-1"
+    />
+    
+</LinearLayout>
+</ScrollView>
+
+</LinearLayout>

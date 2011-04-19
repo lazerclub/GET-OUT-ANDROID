@@ -11,7 +11,7 @@
 	    android:layout_height="wrap_content"
 	    android:src="@drawable/stripe_tile"
 	    android:background="@drawable/stripe_tile"
-		android:layout_below="@id/wlll" />
+		/>
 
 <ScrollView
     android:orientation="vertical"
@@ -27,7 +27,7 @@
     >
     
     <TextView  
-	    android:id="@+id/carrier"
+	    android:id="@+id/title"
 	    android:layout_width="fill_parent" 
 	    android:layout_height="wrap_content"
 	    android:textAppearance="?android:attr/textAppearanceLarge"
@@ -41,32 +41,24 @@
     />
     
     <TextView  
-	    android:id="@+id/num_desc"
+	    android:id="@+id/desc"
+	    android:textAppearance="?android:attr/textAppearanceLarge"
 	    android:layout_width="fill_parent" 
 	    android:layout_height="wrap_content"
-	    android:textAppearance="?android:attr/textAppearanceSmall"
-	    android:text="\nWhat's your email address? This is how people will contact you."
+	    android:text="\n"
 	    android:textColor="#333"
 	    android:padding="3dip"
 	    android:shadowColor="#fff"
 		android:shadowRadius="1"
 		android:shadowDy="-1"
     />
-    
-   <EditText
-        android:id="@+id/email"
-    	android:layout_width="fill_parent" 
-    	android:layout_height="wrap_content" 
-    	android:hint="sholmes@gmail.com"
-   		android:minLines="1"
-    ></EditText>
     
 	<TextView  
 	    android:id="@+id/num_desc"
 	    android:layout_width="fill_parent" 
 	    android:layout_height="wrap_content"
 	    android:textAppearance="?android:attr/textAppearanceSmall"
-	    android:text="\nWhat do you want your username to be?"
+	    android:text="\nWhat do you want to say?"
 	    android:textColor="#333"
 	    android:padding="3dip"
 	    android:shadowColor="#fff"
@@ -75,41 +67,32 @@
     />
     
    <EditText
-        android:id="@+id/username"
+        android:id="@+id/contact"
     	android:layout_width="fill_parent" 
     	android:layout_height="wrap_content" 
-    	android:hint="TheDetective221"
-   		android:minLines="1"
-   		android:maxLength="15"
+    	android:hint="Hey - let's have some fun!"
+   		android:minLines="4"
+   		android:maxLength="140"
     ></EditText>
     
-    <TextView  
-	    android:id="@+id/profile_desc"
+   <TextView  
+	    android:id="@+id/num_desc"
 	    android:layout_width="fill_parent" 
 	    android:layout_height="wrap_content"
 	    android:textAppearance="?android:attr/textAppearanceSmall"
-	    android:text="\nAnd your password?"
+	    android:text="\n\n"
 	    android:textColor="#333"
 	    android:padding="3dip"
 	    android:shadowColor="#fff"
 		android:shadowRadius="1"
 		android:shadowDy="-1"
     />
-    
-   <EditText
-        android:id="@+id/password"
-    	android:layout_width="fill_parent" 
-    	android:layout_height="wrap_content" 
-   		android:minLines="1"
-   		android:maxLength="140"
-   		android:password="true"
-    ></EditText>
     
     <Button
     	android:id="@+id/thebutton"
     	android:layout_width="fill_parent" 
     	android:layout_height="wrap_content" 
-    	android:text="Join!"
+    	android:text="Send"
 		android:textAppearance="?android:attr/textAppearanceMedium"
 		android:padding="4dip"
     ></Button>

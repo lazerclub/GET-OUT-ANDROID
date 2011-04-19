@@ -6,4 +6,7 @@
     <string name="menu_cell_3">Profile</string>
     <string name="menu_cell_4">About</string>
     <string name="user_url">http://beta.getout.cc/users</string>
+    
+    <string name="OAUTH_TOKEN_SECRET">nFMfgCmECqEz7w1HmJe5Z4V8CSK4QPu2smblgfla</string>
+    <string name="OAUTH_TOKEN">nuVQZWx6i0y1DUF0qFbYR89LOYApLF0euX7jKgfx</string>
 </resources>

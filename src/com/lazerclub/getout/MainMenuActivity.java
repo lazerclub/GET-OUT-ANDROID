@@ -33,10 +33,10 @@ public class MainMenuActivity extends ActivityGroup {
         
         gridView = (GridView) findViewById(R.id.gridview);
         
-        listItems.add(new MenuCellItem(getString(R.string.menu_cell_2), R.drawable.nearby, SplashActivity.class));
-        listItems.add(new MenuCellItem(getString(R.string.menu_cell_1), R.drawable.post, SplashActivity.class));
-        listItems.add(new MenuCellItem(getString(R.string.menu_cell_4), R.drawable.about, SplashActivity.class));
-        listItems.add(new MenuCellItem(getString(R.string.menu_cell_3), R.drawable.profile, RegisterActivity.class));
+        listItems.add(new MenuCellItem(getString(R.string.menu_cell_2), R.drawable.nearby, ActivityListActivity.class));
+        listItems.add(new MenuCellItem(getString(R.string.menu_cell_1), R.drawable.post, PostActivity.class));
+        listItems.add(new MenuCellItem(getString(R.string.menu_cell_4), R.drawable.about, AboutActivity.class));
+        listItems.add(new MenuCellItem(getString(R.string.menu_cell_3), R.drawable.profile, ProfileActivity.class));
         
         ListItemsAdapter lia = new ListItemsAdapter(listItems);
         gridView.setAdapter(lia);

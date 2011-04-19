@@ -46,14 +46,14 @@ import android.preference.PreferenceManager;
 
 public class ReqUtils {
 	
-	private String consumer_key = "G6qHqbf6r4ye55HXlZjlLQ";
-	private String consumer_secret = "eUjrmg7tDDw6t9dmTx30ksaI9tqVyyBBQpTGwiuI";
-	private String name = "Down To Cuddle";
-	private String callback_url = "http://api.downto.be/";
-	private String request_url = "http://api.downto.be/oauth/request";
-	private String request_token_url = "http://api.downto.be/oauth/request_token";
-	private String access_token_url = "http://api.downto.be/oauth/access_token";
-	private String authorize_token_url = "http://api.downto.be/oauth/authorize_token";
+	private String consumer_key = "nuVQZWx6i0y1DUF0qFbYR89LOYApLF0euX7jKgfx";
+	private String consumer_secret = "nFMfgCmECqEz7w1HmJe5Z4V8CSK4QPu2smblgfla";
+	private String name = "GET OUT";
+	private String callback_url = "http://beta.getout.cc";
+	private String request_url = "http://beta.getout.cc/oauth/request";
+	private String request_token_url = "http://beta.getout.cc/oauth/request_token";
+	private String access_token_url = "http://beta.getout.cc/oauth/access_token";
+	private String authorize_token_url = "http://beta.getout.cc/oauth/authorize_token";
 	
 	private double lat;
 	private double lon;
@@ -113,11 +113,14 @@ public class ReqUtils {
 	}
 	
 	public int getBeacons(){
-		double lat = loc.getLatitude();
-		double lon = loc.getLongitude();
+//	    (int)(42.358635 * 1e6), (int)(-71.056699 * 1e6)
+//		double lat = loc.getLatitude();
+//		double lon = loc.getLongitude();
+		double lat = 42.358635;
+		double lon = -71.056699;
 		String activity = "cuddle";
 		
-		HttpGet req = new HttpGet("http://api.downto.be/beacons?activity=" + activity + "&latitude=" + lat + "&longitude=" + lon);
+		HttpGet req = new HttpGet("http://beta.getout.cc/beacons?activity=" + activity + "&latitude=" + lat + "&longitude=" + lon);
 		OAuthConsumer consumer = new CommonsHttpOAuthConsumer(consumer_key, consumer_secret);
 		consumer.setTokenWithSecret(prefs.getString("oat", ""), prefs.getString("oats", ""));
 		
@@ -165,47 +168,10 @@ public class ReqUtils {
 		
 	}
 	
-	public boolean putValidationCode(String vc){
-		
-		
-		HttpPut req = new HttpPut("http://api.downto.be/me/validation");
-		List<NameValuePair> nvps = new ArrayList<NameValuePair>(2);
-		nvps.add(new BasicNameValuePair("validation_code", vc));
-		try {
-			req.setEntity(new UrlEncodedFormEntity(nvps));
-		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		OAuthConsumer consumer = new CommonsHttpOAuthConsumer(consumer_key, consumer_secret);
-		consumer.setTokenWithSecret(prefs.getString("oat", ""), prefs.getString("oats", ""));
-		try {
-			consumer.sign(req);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-		
-		HttpClient hc = new DefaultHttpClient();
-		HttpResponse response = null;
-		try {
-			 response =  hc.execute(req);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
-		
-		System.out.println("Validation result:");
-		System.out.println(response.getEntity());
-		return true;
-	}
-	
 	public boolean postBeacon(String message){
 		String activity = "cuddle";
 		
-		HttpPost req = new HttpPost("http://api.downto.be/beacons");
+		HttpPost req = new HttpPost("http://beta.getout.cc/");
 		
 		List<NameValuePair> nvps = new ArrayList<NameValuePair>(2);
 		nvps.add(new BasicNameValuePair("latitude", "" + lat));
@@ -289,7 +255,7 @@ public class ReqUtils {
 	
 	public boolean postUser(String number, String profile){
 		
-		HttpPost req = new HttpPost("http://api.downto.be/users");	
+		HttpPost req = new HttpPost("http://beta.getout.cc/users");	
 		List<NameValuePair> nvps = new ArrayList<NameValuePair>(2);
 		nvps.add(new BasicNameValuePair("phone_number", number));
 		nvps.add(new BasicNameValuePair("profile", profile));
@@ -448,7 +414,7 @@ public class ReqUtils {
 	public String authenticate() throws OAuthMessageSignerException, OAuthNotAuthorizedException, OAuthExpectationFailedException, OAuthCommunicationException{
 		OAuthProvider provider = new CommonsHttpOAuthProvider(request_token_url, access_token_url, authorize_token_url);
 		OAuthConsumer consumer = new CommonsHttpOAuthConsumer(consumer_key, consumer_secret);
-		String authUrl = provider.retrieveRequestToken(consumer, OAuth.OUT_OF_BAND);
+		String authUrl = provider.retrieveRequestToken(consumer, OAuth.OAUTH_CONSUMER_KEY);
 		
 		oauth_token = consumer.getToken();
 		oauth_token_secret = consumer.getTokenSecret();

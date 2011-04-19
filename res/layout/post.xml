@@ -31,21 +31,22 @@
 	    android:layout_width="fill_parent" 
 	    android:layout_height="wrap_content"
 	    android:textAppearance="?android:attr/textAppearanceLarge"
-	    android:text="You're the first person in your area who wants to cuddle!"
+	    android:text="Post an activity!"
 	    android:textColor="#333"
 		android:textStyle="bold"
 	    android:padding="7dip"
 	    android:shadowColor="#fff"
 		android:shadowRadius="1"
 		android:shadowDy="-1"
+		android:paddingTop="24dip"
     />
     
     <TextView  
 	    android:id="@+id/num_desc"
 	    android:layout_width="fill_parent" 
 	    android:layout_height="wrap_content"
-	    android:textAppearance="?android:attr/textAppearanceSmall"
-	    android:text="\nWhat's your email address? This is how people will contact you."
+	    android:textAppearance="?android:attr/textAppearanceMedium"
+	    android:text="\nWhat do you want to do?"
 	    android:textColor="#333"
 	    android:padding="3dip"
 	    android:shadowColor="#fff"
@@ -57,7 +58,7 @@
         android:id="@+id/email"
     	android:layout_width="fill_parent" 
     	android:layout_height="wrap_content" 
-    	android:hint="sholmes@gmail.com"
+    	android:hint="ex: drink, soccer, cuddle"
    		android:minLines="1"
     ></EditText>
     
@@ -65,30 +66,8 @@
 	    android:id="@+id/num_desc"
 	    android:layout_width="fill_parent" 
 	    android:layout_height="wrap_content"
-	    android:textAppearance="?android:attr/textAppearanceSmall"
-	    android:text="\nWhat do you want your username to be?"
-	    android:textColor="#333"
-	    android:padding="3dip"
-	    android:shadowColor="#fff"
-		android:shadowRadius="1"
-		android:shadowDy="-1"
-    />
-    
-   <EditText
-        android:id="@+id/username"
-    	android:layout_width="fill_parent" 
-    	android:layout_height="wrap_content" 
-    	android:hint="TheDetective221"
-   		android:minLines="1"
-   		android:maxLength="15"
-    ></EditText>
-    
-    <TextView  
-	    android:id="@+id/profile_desc"
-	    android:layout_width="fill_parent" 
-	    android:layout_height="wrap_content"
-	    android:textAppearance="?android:attr/textAppearanceSmall"
-	    android:text="\nAnd your password?"
+	    android:textAppearance="?android:attr/textAppearanceMedium"
+	    android:text="\nDescribe what you want to do in a bit more detail!"
 	    android:textColor="#333"
 	    android:padding="3dip"
 	    android:shadowColor="#fff"
@@ -100,18 +79,19 @@
         android:id="@+id/password"
     	android:layout_width="fill_parent" 
     	android:layout_height="wrap_content" 
-   		android:minLines="1"
+    	android:hint="Gin and tonics at Charlie's Kitchen?"
+   		android:minLines="3"
    		android:maxLength="140"
-   		android:password="true"
     ></EditText>
     
     <Button
-    	android:id="@+id/thebutton"
+    	android:id="@+id/post_button"
     	android:layout_width="fill_parent" 
     	android:layout_height="wrap_content" 
-    	android:text="Join!"
+    	android:text="Post!"
 		android:textAppearance="?android:attr/textAppearanceMedium"
-		android:padding="4dip"
+		android:padding="8dip"
+		android:paddingTop="24dip"
     ></Button>
     
     <ProgressBar
@@ -129,7 +109,7 @@
 	    android:layout_width="fill_parent" 
 	    android:layout_height="wrap_content"
 	    android:textAppearance="?android:attr/textAppearanceSmall"
-	    android:text="posting cuddle data.."
+	    android:text="posting.."
 	    android:textColor="#000000"
 	    android:padding="7dip"
         android:gravity="center"

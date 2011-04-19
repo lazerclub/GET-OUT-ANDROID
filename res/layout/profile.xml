@@ -45,27 +45,6 @@
 	    android:layout_width="fill_parent" 
 	    android:layout_height="wrap_content"
 	    android:textAppearance="?android:attr/textAppearanceSmall"
-	    android:text="\nWhat's your email address? This is how people will contact you."
-	    android:textColor="#333"
-	    android:padding="3dip"
-	    android:shadowColor="#fff"
-		android:shadowRadius="1"
-		android:shadowDy="-1"
-    />
-    
-   <EditText
-        android:id="@+id/email"
-    	android:layout_width="fill_parent" 
-    	android:layout_height="wrap_content" 
-    	android:hint="sholmes@gmail.com"
-   		android:minLines="1"
-    ></EditText>
-    
-	<TextView  
-	    android:id="@+id/num_desc"
-	    android:layout_width="fill_parent" 
-	    android:layout_height="wrap_content"
-	    android:textAppearance="?android:attr/textAppearanceSmall"
 	    android:text="\nWhat do you want your username to be?"
 	    android:textColor="#333"
 	    android:padding="3dip"
@@ -75,20 +54,19 @@
     />
     
    <EditText
-        android:id="@+id/username"
+        android:id="@+id/usrname"
     	android:layout_width="fill_parent" 
     	android:layout_height="wrap_content" 
-    	android:hint="TheDetective221"
+    	android:hint="TheDetective"
    		android:minLines="1"
-   		android:maxLength="15"
     ></EditText>
     
-    <TextView  
-	    android:id="@+id/profile_desc"
+	<TextView  
+	    android:id="@+id/num_desc"
 	    android:layout_width="fill_parent" 
 	    android:layout_height="wrap_content"
 	    android:textAppearance="?android:attr/textAppearanceSmall"
-	    android:text="\nAnd your password?"
+	    android:text="\nWhat should your profile say?"
 	    android:textColor="#333"
 	    android:padding="3dip"
 	    android:shadowColor="#fff"
@@ -97,19 +75,32 @@
     />
     
    <EditText
-        android:id="@+id/password"
+        android:id="@+id/profile"
     	android:layout_width="fill_parent" 
     	android:layout_height="wrap_content" 
-   		android:minLines="1"
-   		android:maxLength="140"
-   		android:password="true"
+    	android:hint="22/m/boston - Love to play sports, drink beers and have adventures with fun people!"
+   		android:minLines="4"
+   		android:maxLength="15"
     ></EditText>
+    
+   <TextView  
+	    android:id="@+id/num_desc"
+	    android:layout_width="fill_parent" 
+	    android:layout_height="wrap_content"
+	    android:textAppearance="?android:attr/textAppearanceSmall"
+	    android:text="\n\n"
+	    android:textColor="#333"
+	    android:padding="3dip"
+	    android:shadowColor="#fff"
+		android:shadowRadius="1"
+		android:shadowDy="-1"
+    />
     
     <Button
     	android:id="@+id/thebutton"
     	android:layout_width="fill_parent" 
     	android:layout_height="wrap_content" 
-    	android:text="Join!"
+    	android:text="Update"
 		android:textAppearance="?android:attr/textAppearanceMedium"
 		android:padding="4dip"
     ></Button>
