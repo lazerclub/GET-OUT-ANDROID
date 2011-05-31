@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
@@ -23,6 +24,9 @@ public class ActivityListActivity extends Activity{
     Context c;
     ReqUtils ru;
     Handler mHandler;
+    ArrayList<HashMap<String,String>> al;
+    GetDataTask gdt;
+    ProgressBar pb;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,43 +35,8 @@ public class ActivityListActivity extends Activity{
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.lister);    	
 
-        final ArrayList<HashMap<String,String>> al = new ArrayList<HashMap<String,String>>();
-        HashMap<String, String> hm = new HashMap<String, String>();
+        al = new ArrayList<HashMap<String,String>>();
         
-        hm.put("activity", "cuddle");
-        hm.put("id", "id");
-        hm.put("description", "22/f looking for snugs");
-        hm.put("distance", "1.1 miles");
-        hm.put("user", "Rich");
-        
-        HashMap<String, String> hm2 = new HashMap<String, String>();
-        
-        hm2.put("activity", "asdf");
-        hm2.put("id", "asdf");
-        hm2.put("description", "asdf");
-        hm2.put("distance", "asdf");
-        hm.put("user", "Rich");
-        
-        al.add(hm);
-        al.add(hm);
-        al.add(hm);
-        al.add(hm);
-        al.add(hm);
-        al.add(hm);
-        al.add(hm);
-        al.add(hm);
-        al.add(hm);
-        al.add(hm);
-        al.add(hm);
-        al.add(hm);
-        al.add(hm);
-        al.add(hm);
-        al.add(hm);
-        al.add(hm2);
-        al.add(hm2);
-        al.add(hm);
-        al.add(hm2);
-       
         //Setup the adapter views;
         adapter = new ActivityAdapter();
         adapter.setList(al);
@@ -75,18 +44,28 @@ public class ActivityListActivity extends Activity{
         adapter.setParent(this);
         lv = (ListView) findViewById(R.id.list);
         lv.setAdapter(adapter);
+        pb = (ProgressBar)findViewById(R.id.progressbar);
         
         c=this;
         mHandler = new Handler();
         
         ru = new ReqUtils(c);
         
-        mHandler.postDelayed(new Runnable() {
-
-            public void run() {
-                ru.getBeacons();
-                
-            }}, 10000);
+        gdt = new GetDataTask();
+        gdt.setAdapter(adapter);
+        gdt.setContext(this);
+        gdt.setList(al);
+        gdt.setSpinner(pb);
+        gdt.execute("");
+        
+//        mHandler.postDelayed(new Runnable() {
+//
+//            public void run() {
+//                al = ru.getBeacons();
+//                adapter.setList(al);
+//                adapter.notifyDataSetChanged();
+//                
+//            }}, 1);
         
         
         final ActivityListActivity c = ActivityListActivity.this;

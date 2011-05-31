@@ -9,6 +9,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import oauth.signpost.OAuth;
@@ -22,6 +23,7 @@ import oauth.signpost.exception.OAuthCommunicationException;
 import oauth.signpost.exception.OAuthExpectationFailedException;
 import oauth.signpost.exception.OAuthMessageSignerException;
 import oauth.signpost.exception.OAuthNotAuthorizedException;
+import oauth.signpost.signature.HmacSha1MessageSigner;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -112,16 +114,21 @@ public class ReqUtils {
 		return loc;
 	}
 	
-	public int getBeacons(){
+	public ArrayList<HashMap<String, String>> getBeacons(){
 //	    (int)(42.358635 * 1e6), (int)(-71.056699 * 1e6)
 //		double lat = loc.getLatitude();
 //		double lon = loc.getLongitude();
 		double lat = 42.358635;
 		double lon = -71.056699;
-		String activity = "cuddle";
+	    
+	    System.out.println("latlon");
+	    System.out.println(lat);
+	    System.out.println(lon);
 		
-		HttpGet req = new HttpGet("http://beta.getout.cc/beacons?activity=" + activity + "&latitude=" + lat + "&longitude=" + lon);
+//		HttpGet req = new HttpGet(c.getString(R.string.beacons_url) + "?latitude=" + lat + "&longitude=" + lon +"&radius=24.9");
+		HttpGet req = new HttpGet(c.getString(R.string.beacons_url) + "?latitude=" + lat + "&longitude=" + lon);
 		OAuthConsumer consumer = new CommonsHttpOAuthConsumer(consumer_key, consumer_secret);
+		consumer.setMessageSigner(new HmacSha1MessageSigner());
 		consumer.setTokenWithSecret(prefs.getString("oat", ""), prefs.getString("oats", ""));
 		
 		try {
@@ -142,10 +149,8 @@ public class ReqUtils {
 		try {
 			 response =  hc.execute(req);
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -154,9 +159,9 @@ public class ReqUtils {
 		System.out.println("Beacon response: ");
 		String r = parseEntity(response.getEntity());
 		System.out.println(r);
-		HashMap<String, String> hm = null;
+		ArrayList<HashMap<String, String>> hm = null;
 		try {
-			hm = parseJSON(r);
+			hm = parseJSONArray(r);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -164,29 +169,31 @@ public class ReqUtils {
 		System.out.println("Parsed JSON HashMap: ");
 		System.out.println(hm);
 		
-		return 0;
+		return hm;
 		
 	}
 	
-	public boolean postBeacon(String message){
-		String activity = "cuddle";
-		
-		HttpPost req = new HttpPost("http://beta.getout.cc/");
+	public boolean postBeacon(String activity, String message){
+	    double lat = 42.358635;
+	    double lon = -71.056699;
+	    
+		HttpPost req = new HttpPost(c.getString(R.string.beacons_url));
 		
 		List<NameValuePair> nvps = new ArrayList<NameValuePair>(2);
 		nvps.add(new BasicNameValuePair("latitude", "" + lat));
 		nvps.add(new BasicNameValuePair("longitude", "" + lon));
-		nvps.add(new BasicNameValuePair("message", message));
-		nvps.add(new BasicNameValuePair("activity", activity));
+		nvps.add(new BasicNameValuePair("data-message", message));
+		nvps.add(new BasicNameValuePair("data-activity", activity));
 		try {
 			req.setEntity(new UrlEncodedFormEntity(nvps));
 		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
-		OAuthConsumer consumer = new CommonsHttpOAuthConsumer(consumer_key, consumer_secret);
+		OAuthConsumer consumer = new CommonsHttpOAuthConsumer(consumer_key, consumer_secret );
+		consumer.setMessageSigner(new HmacSha1MessageSigner());
 		consumer.setTokenWithSecret(prefs.getString("oat", ""), prefs.getString("oats", ""));
+		
 		try {
 			consumer.sign(req);
 		} catch (OAuthMessageSignerException e) {
@@ -211,27 +218,23 @@ public class ReqUtils {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		catch(Exception e) {
+		    //sheeeeeeeeeeeeeeeeeeeeeeeeiit
+		}
 
 		System.out.println("Requested URL: ");
 		System.out.println(req);
 		System.out.println("Beacon response: ");
 		String r = parseEntity(response.getEntity());
-		System.out.println(r);
-		HashMap<String, String> hm = null;
-		try {
-			hm = parseJSON(r);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		int status = response.getStatusLine().getStatusCode() / 100;
+		System.out.println(status);
+
+		if(status == 2) {
+		    //Yay!
+		    return true;
+		} else {
+		    return false;
 		}
-		System.out.println("Parsed JSON HashMap: ");
-		System.out.println(hm);
-		
-		if(hm.containsKey("errors")){; 
-			return false;
-		}
-		
-		return true;
 		
 	}
 	
@@ -337,6 +340,43 @@ public class ReqUtils {
 		return hm;
 	}
 	
+	   private ArrayList<HashMap<String, String>> parseJSONArray(final String s) throws JSONException{
+	       ArrayList<HashMap<String, String>> al = new ArrayList<HashMap<String,String>>();
+	        HashMap<String, String> hm = new HashMap<String, String>();
+	        HashMap<String, String> d = new HashMap<String, String>();
+	        JSONArray va = new JSONArray(s);
+	        JSONObject json;
+	        JSONArray jn;
+	        String data;
+	        for(int i=0; i<va.length();i++){
+	            json = va.getJSONObject(i).getJSONObject("beacon");
+	            jn = json.names();
+	            System.out.println(json);
+	            System.out.println(jn);
+	            for(int j=0; j<jn.length();j++) {
+	                if(jn.getString(j).equals("data")) {
+	                    data = json.getString("data");
+	                    d = parseJSON(data);
+	                    Iterator<String> it = d.keySet().iterator();
+	                    while(it.hasNext()) {
+	                        String k = it.next();
+	                        hm.put(k, d.get(k));
+	                    }
+	                }
+	                else {
+	                    hm.put(jn.getString(j), json.getString(jn.getString(j)));
+	                }
+	            }
+	            al.add(hm);
+	            hm = new HashMap<String, String>();
+	        }
+	        System.out.println("Al...");
+	        System.out.println(al);
+	        System.out.println("Thatwasal!");
+	        
+	        return al;
+	    }
+	
 	private String parseEntity(HttpEntity he){
 		try {
 			return convertStreamToString(he.getContent());
@@ -379,12 +419,15 @@ public class ReqUtils {
 	
 	public String registerUser(String username, String email, String password) {
         HttpPost req = new HttpPost(c.getString(R.string.user_url));
+        req.addHeader("accepts", "application/json");
+        
+        System.out.println(c.getString(R.string.user_url));
         
         List<NameValuePair> nvps = new ArrayList<NameValuePair>(2);
         nvps.add(new BasicNameValuePair("user[username]", username));
         nvps.add(new BasicNameValuePair("user[email]", email));
         nvps.add(new BasicNameValuePair("user[password]", password));
-        nvps.add(new BasicNameValuePair("user[password_confirmation]", password));
+        nvps.add(new BasicNameValuePair("user_oauth_token", c.getString(R.string.OAUTH_TOKEN)));
         try {
             req.setEntity(new UrlEncodedFormEntity(nvps));
         } catch (UnsupportedEncodingException e1) {
@@ -407,7 +450,30 @@ public class ReqUtils {
         System.out.println("Response: ");
         String r = parseEntity(response.getEntity());
         System.out.println(r);
-        return r;
+        System.out.println("That was the response.");
+        
+        try {
+            HashMap<String, String>rmap = parseJSON(r);
+            
+            if(rmap.containsKey("errors")) {
+                return rmap.get("errors");
+            }
+            
+            HashMap<String, String>token_map = parseJSON(rmap.get("oauth_token"));
+            HashMap<String, String>user_map = parseJSON(rmap.get("user"));
+            
+            SharedPreferences.Editor eddie = prefs.edit();
+            eddie.putString("oat", token_map.get("token"));
+            eddie.putString("oats", token_map.get("secret"));
+            eddie.putString("email", user_map.get("email"));
+            eddie.putString("username", user_map.get(username));
+            eddie.commit();
+            return "Victory!";
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        
+        return "Something went wrong.";
 	    
 	}
 	

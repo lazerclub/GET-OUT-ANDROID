@@ -2,6 +2,7 @@ package com.lazerclub.getout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import android.app.Activity;
@@ -25,7 +26,17 @@ public class ActivityAdapter extends BaseAdapter{
     }
     
     public void setList(ArrayList<HashMap<String, String>> li) {
-        listItems = li;
+        if(listItems == null) {
+            listItems = li;
+        }
+        else if(li != null) {
+            listItems.clear();
+            Iterator<HashMap<String, String>> i = li.iterator();
+            while(i.hasNext()) {
+                listItems.add(i.next());
+            }
+        }
+        
     }
     
     public void setParent(Activity ac) {

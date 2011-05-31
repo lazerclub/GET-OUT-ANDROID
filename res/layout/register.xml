@@ -114,28 +114,40 @@
 		android:padding="4dip"
     ></Button>
     
+    <LinearLayout     
+	    android:orientation="horizontal"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:padding="4dip"
+	    android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_gravity="center"
+    >
+    
     <ProgressBar
     	android:id="@+id/progressbar"
-    	android:padding="15dip"
+    	android:padding="6dip"
     	android:layout_height="wrap_content"
     	android:layout_width="wrap_content"
-    	android:visibility="gone"
     	android:layout_centerHorizontal="true"
         android:gravity="center"
         android:layout_gravity="center"
+        style="@android:style/Widget.ProgressBar.Small"
+        android:visibility="gone"
    	></ProgressBar>
     <TextView  
 	    android:id="@+id/loadingtext"
-	    android:layout_width="fill_parent" 
+	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:textAppearance="?android:attr/textAppearanceSmall"
-	    android:text="posting cuddle data.."
+	    android:textSize="12dip"
+	    android:text="posting.."
 	    android:textColor="#000000"
-	    android:padding="7dip"
+	    android:padding="5dip"
         android:gravity="center"
-    	android:visibility="gone"
+        android:visibility="gone"
     	
     />
+    </LinearLayout>
 </LinearLayout>
 </ScrollView>
 

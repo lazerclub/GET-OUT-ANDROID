@@ -23,22 +23,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class PostActivity extends Activity{
      
 	private int numBeacons;
 	TextView lead;
-	EditText email;
-	EditText username;
-	EditText password;
+	EditText activity;
+	EditText desc;
 	Button b;
 	ProgressBar p;
 	TextView loading;
 	ReqUtils ru;
+	Context c;
 	
 	public void onCreate(Bundle icicle) { 
           super.onCreate(icicle); 
-          
+          c=this;
           //no title bar
           requestWindowFeature(Window.FEATURE_NO_TITLE);
           //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -49,15 +50,15 @@ public class PostActivity extends Activity{
           b = (Button) findViewById(R.id.post_button);
           p = (ProgressBar) findViewById(R.id.progressbar);
           
+          activity = (EditText) findViewById(R.id.activity);
+          desc = (EditText) findViewById(R.id.desc);
+          
 	      lead.setText("So, what do you feel like doing?\n");
           
           b.setOnClickListener(new OnClickListener(){
 
 			public void onClick(View v) {
-				if(email.getText().toString().equals("") || username.getText().toString().equals("")|| password.getText().toString().equals("")){
-					return;
-				}
-				if(password.getText().toString().length()<6){
+				if(activity.getText().toString().equals("") || desc.getText().toString().equals("")){
 					return;
 				}
 				
@@ -65,31 +66,36 @@ public class PostActivity extends Activity{
 				b.setEnabled(false);
 				p.setVisibility(View.VISIBLE);
 				loading.setVisibility(View.VISIBLE);
-				loading.setText("Sending..");
+				loading.setText("Posting..");
 				
 				Handler mHandler = new Handler();
 				mHandler.postDelayed(new Runnable(){
 
 					public void run() {
 						
-//						try {
-////							String response = ru.registerUser(username.getText().toString(), email.getText().toString(), password.getText().toString());
-////							if(ru.postUser(phone.getText().toString(), profile.getText().toString())){
-////								loading.setText("Okay!");
-////								Intent i = new Intent(RegisterActivity.this, SplashActivity.class);
-////								startActivity(i);
-////							}
-////							else{
-////								p.setVisibility(View.GONE);
-////								b.setPressed(false);
-////								b.setEnabled(true);
-////							}
-//						} catch (Exception e) {
-//							// TODO Auto-generated catch block
-//							e.printStackTrace();
-//							b.setPressed(false);
-//							b.setEnabled(true);
-//						}
+						try {
+						    Boolean resp = ru.postBeacon(activity.getText().toString(), desc.getText().toString());
+						    
+						    if(resp) {
+						      Toast.makeText(c, "Posted!", Toast.LENGTH_SHORT).show();
+                              Intent i = new Intent(PostActivity.this, ActivityListActivity.class);
+                              startActivity(i);
+                              finish();
+						    }else {
+						      Toast.makeText(c, "Something went wrong!", Toast.LENGTH_SHORT).show();
+                              p.setVisibility(View.GONE);
+                              loading.setVisibility(View.GONE);
+                              b.setPressed(false);
+                              b.setEnabled(true);
+						    }
+						    
+						} catch (Exception e) {
+                            Toast.makeText(c, "Something went wrong!", Toast.LENGTH_SHORT).show();
+                            p.setVisibility(View.GONE);
+                            loading.setVisibility(View.GONE);
+                            b.setPressed(false);
+                            b.setEnabled(true);
+						}
 				
 					}}, 500);
 			}});

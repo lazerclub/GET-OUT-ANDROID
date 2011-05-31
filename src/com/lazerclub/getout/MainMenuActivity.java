@@ -5,7 +5,9 @@ import java.util.List;
 
 import android.app.ActivityGroup;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,7 @@ public class MainMenuActivity extends ActivityGroup {
     
     GridView gridView;
     private List<MenuCellItem> listItems = new ArrayList<MenuCellItem>(); 
+    private SharedPreferences prefs;
     
     /** Called when the activity is first created. */
     @Override
@@ -48,6 +51,17 @@ public class MainMenuActivity extends ActivityGroup {
                 Intent i = new Intent(MainMenuActivity.this, listItems.get((arg2)).getLaunchTo());
                 startActivity(i);
             }});
+        
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String oat = prefs.getString("oat", null);
+        String oats = prefs.getString("oats", null);
+        
+        if(oat == null || oats == null) {
+            System.out.println("Oats are null!");
+            Intent i = new Intent(MainMenuActivity.this, RegisterActivity.class);
+            startActivity(i);
+        }
+        
         
     }
     

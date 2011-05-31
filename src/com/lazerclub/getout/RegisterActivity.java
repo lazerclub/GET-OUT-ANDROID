@@ -12,8 +12,10 @@ import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
 import android.view.KeyEvent;
 import android.view.View;
@@ -23,6 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class RegisterActivity extends Activity{
      
@@ -35,9 +38,12 @@ public class RegisterActivity extends Activity{
 	ProgressBar p;
 	TextView loading;
 	ReqUtils ru;
+	Context c;
+    private SharedPreferences prefs;
 	
 	public void onCreate(Bundle icicle) { 
           super.onCreate(icicle); 
+          c = this;
           
           //no title bar
           requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -52,7 +58,7 @@ public class RegisterActivity extends Activity{
           b = (Button) findViewById(R.id.thebutton);
           p = (ProgressBar) findViewById(R.id.progressbar);
           
-	      lead.setText("Hello, new friend!\nYou need to make a profile so you can meet new people!");
+	      lead.setText("Hello, new friend!\nYou need to register before you can meet new people!");
           
           b.setOnClickListener(new OnClickListener(){
 
@@ -68,7 +74,7 @@ public class RegisterActivity extends Activity{
 				b.setEnabled(false);
 				p.setVisibility(View.VISIBLE);
 				loading.setVisibility(View.VISIBLE);
-				loading.setText("Sending..");
+				loading.setText("Registering..");
 				
 				Handler mHandler = new Handler();
 				mHandler.postDelayed(new Runnable(){
@@ -76,28 +82,37 @@ public class RegisterActivity extends Activity{
 					public void run() {
 						
 						try {
+						    System.out.println("Registering..");
 							String response = ru.registerUser(username.getText().toString(), email.getText().toString(), password.getText().toString());
-//							if(ru.postUser(phone.getText().toString(), profile.getText().toString())){
-//								loading.setText("Okay!");
-//								Intent i = new Intent(RegisterActivity.this, SplashActivity.class);
-//								startActivity(i);
-//							}
-//							else{
-//								p.setVisibility(View.GONE);
-//								b.setPressed(false);
-//								b.setEnabled(true);
-//							}
+							
+							if(response != "Victory!") {
+		                            b.setPressed(false);
+		                            b.setEnabled(true);
+		                            p.setVisibility(View.GONE);
+		                            loading.setVisibility(View.GONE);
+		                            Toast.makeText(c, response, Toast.LENGTH_SHORT).show();
+							}else {
+                              Intent i = new Intent(RegisterActivity.this, ProfileActivity.class);
+                              startActivity(i);
+							}
+							
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 							b.setPressed(false);
 							b.setEnabled(true);
 						}
-				
-					}}, 500);
+					}}, 200);
 			}});
           
           ru = new ReqUtils(this);
+          
+          prefs = PreferenceManager.getDefaultSharedPreferences(this);
+          String oat = prefs.getString("oat", null);
+          String oats = prefs.getString("oats", null);
+          if(oat != null && oats != null) {
+              Intent i = new Intent(RegisterActivity.this, MainMenuActivity.class);
+              startActivity(i);
+          }
 		     
           Account[] accounts = AccountManager.get(this).getAccounts();
           for (Account account : accounts) {

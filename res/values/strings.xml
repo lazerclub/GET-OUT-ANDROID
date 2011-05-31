@@ -5,7 +5,13 @@
     <string name="menu_cell_2">Nearby</string>
     <string name="menu_cell_3">Profile</string>
     <string name="menu_cell_4">About</string>
-    <string name="user_url">http://beta.getout.cc/users</string>
+    
+    <string name="user_url">http://beta.getout.cc/api/v1/users.json</string>
+    <string name="beacons_url">http://beta.getout.cc/api/v1/beacons.json</string>
+
+    <string name="oauth_request_token">http://beta.getout.cc/oauth/request_token</string>
+    <string name="oauth_access_token">http://beta.getout.cc/oauth/access_token</string>
+    <string name="oauth_authorize">http://beta.getout.cc/oauth/authorize</string>
     
     <string name="OAUTH_TOKEN_SECRET">nFMfgCmECqEz7w1HmJe5Z4V8CSK4QPu2smblgfla</string>
     <string name="OAUTH_TOKEN">nuVQZWx6i0y1DUF0qFbYR89LOYApLF0euX7jKgfx</string>

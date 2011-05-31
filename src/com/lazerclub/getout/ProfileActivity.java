@@ -12,8 +12,10 @@ import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
 import android.view.KeyEvent;
 import android.view.View;
@@ -35,6 +37,7 @@ public class ProfileActivity extends Activity{
 	ProgressBar p;
 	TextView loading;
 	ReqUtils ru;
+	SharedPreferences sp;
 	
 	public void onCreate(Bundle icicle) { 
           super.onCreate(icicle); 
@@ -52,7 +55,14 @@ public class ProfileActivity extends Activity{
           b = (Button) findViewById(R.id.thebutton);
           p = (ProgressBar) findViewById(R.id.progressbar);
           
-	      lead.setText("So, you want to edit your profile?");
+	      lead.setText("What do you want your profile to say?");
+	      
+	      sp = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+	      String u = sp.getString("username", "");
+	      if(!u.equals("")) {
+	          username.setText(u);
+	      }
+	      
           
           b.setOnClickListener(new OnClickListener(){
 
